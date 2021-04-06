@@ -11,7 +11,7 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.mail
 
     def serialize(self):
         return {
@@ -46,6 +46,9 @@ class People(db.Model):
         return {
             "id": self.id,
             "email": self.email,
+            "height": self.height,
+            "mass": self.mass,
+            "hair_color": self.hair_color,
             # do not serialize the password, its a security breach
         }
 
@@ -62,15 +65,14 @@ class Planets (db.Model):
     surface_water = db.Column(db.String(250), nullable=False)
     created = db.Column(db.String(250), nullable=False)
     edited = db.Column(db.String(250), nullable=False)
-    url = db.Column(db.String(250), nullable=False)
+   
 
-        def __repr__(self):
+    def __repr__(self):
         return '<Planets %r>' % self.name
 
     def serialize(self):
         return {
             "id": self.id,
-            "email": self.email,
+            "name": self.name
             # do not serialize the password, its a security breach
-
-
+        }
