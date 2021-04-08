@@ -16,7 +16,9 @@ class User(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "user_name": self.user_name,
             "email": self.email,
+            "password": self.password,
             # do not serialize the password, its a security breach
         }
 
@@ -45,10 +47,19 @@ class People(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "email": self.email,
+            "name": self.name,
+            "birth_year": self.birth_year,
+            "eye_color": self.eye_color,
+            "gender": self.gender,
+            "hair_color": self.hair_color,
             "height": self.height,
             "mass": self.mass,
-            "hair_color": self.hair_color,
+            "skin_color": self.skin_color,
+            "homeworld": self.homeworld,
+            "films": self.films,
+            "species": self.species,
+            "starships": self.starships,
+            "vehicles": self.vehicles,
             # do not serialize the password, its a security breach
         }
 
@@ -73,6 +84,37 @@ class Planets (db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "name": self.name
+            "name": self.name,
+            "diameter": self.diameter,
+            "rotation_period": self.rotation_period,
+            "orbital_period": self.orbital_period,
+            "gravity": self.gravity,
+            "population": self.population,
+            "climate": self.climate,
+            "terrain": self.terrain,
+            "surface_water": self.surface_water,
+            "created": self.created,
+            "edited": self.edited,
+            # do not serialize the password, its a security breach
+        }
+
+class Favorites(db.Model):
+    id= db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    planets_id = db.Column(db.Integer, db.ForeignKey('planets.id'))
+    people_id = db.Column(db.Integer, db.ForeignKey('people.id'))
+    planets = relationship(Planets)
+    people = relationship(People)
+    user = relationship(User)
+
+    def __repr__(self):
+        return '<Favorites %r>' % self.id
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "planets_id": self.planets_id,
+            "people_id": self.people_id,
             # do not serialize the password, its a security breach
         }
