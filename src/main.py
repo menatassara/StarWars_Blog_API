@@ -53,7 +53,7 @@ def create_user():
 def get_userid(id):
     userid = User.query.get(id)
     result = userid.serialize()
-    return jsonify(response_body), 200
+    return jsonify(result), 200
 
 @app.route('/people', methods=['GET'])
 def get_people():
